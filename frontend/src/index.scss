@@ -1,0 +1,8 @@
+@use "@picocss/pico/scss/pico" with (
+  $theme-color: "lime"
+);
+
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
