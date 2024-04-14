@@ -1,16 +1,12 @@
-import {FC, ReactNode} from "react";
 import {Provider} from "react-redux";
 import {store} from "./store.ts";
-import {BrowserRouter} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {appRoutes} from "./appRouter.tsx";
 
-interface IProviders {
-  readonly children: ReactNode
-}
+export const Providers = () => {
+  const router = createBrowserRouter(appRoutes)
 
-export const Providers: FC<IProviders> = ({children}) => {
-  return <BrowserRouter>
-    <Provider store={store}>
-      {children}
-    </Provider>
-  </BrowserRouter>
+  return <Provider store={store}>
+    <RouterProvider router={router}/>
+  </Provider>
 }

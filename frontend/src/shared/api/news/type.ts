@@ -4,5 +4,5 @@ export interface INew {
   readonly content: string,
   readonly rating: number,
   readonly author: string,
-  readonly createdAt: string,
+  readonly created_at: string,
 }

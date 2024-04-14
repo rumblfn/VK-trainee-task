@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path
 
 from hackernews.views import HackerNewsAPIList
+from hackernews.views import HackerNewAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v0/hackernew/<int:id>/', HackerNewAPI.as_view()),
     path('api/v0/hackernewslist/', HackerNewsAPIList.as_view())
 ]

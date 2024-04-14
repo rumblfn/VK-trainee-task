@@ -8,9 +8,10 @@ export const newsApi = createApi({
     getLatestNews: builder.query<INew[], void>({
       query: () => `/hackernewslist`,
     }),
+    getById: builder.query<INew, string>({
+      query: (id) => `/hackernew/${id}`,
+    })
   }),
 })
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetLatestNewsQuery } = newsApi
+export const { useGetLatestNewsQuery, useGetByIdQuery } = newsApi
