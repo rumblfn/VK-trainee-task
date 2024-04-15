@@ -20,7 +20,8 @@ export const News = () => {
         <h1>News page</h1>
         {((isLoading && !isSuccess) || isFetching) && <span className={styles.newsLoader} aria-busy="true">Hacking news...</span>}
       </hgroup>
-      <button onClick={refetch}
+      <button type="button"
+              onClick={refetch}
               disabled={isLoading || isFetching}
               data-tooltip="Hard update of news"
       >
