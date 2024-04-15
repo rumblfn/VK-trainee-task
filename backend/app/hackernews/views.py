@@ -11,17 +11,21 @@ class HackerNewsAPIList(generics.ListAPIView):
     serializer_class = HackerNewsSerializer
 
 
-class HackerNewsDetailedAPI(APIView):
+class HackerNewsAPI(generics.RetrieveAPIView):
+    queryset = HackerNews.objects.all()
+    serializer_class = HackerNewsSerializer
+    lookup_field = 'id'
+
+
+class HackerNewsCommentsInfo(APIView):
     def get(self, request, id):
-        news = HackerNews.objects.get(id=id)
         comments = Comments.objects.filter(hacker_new=id)
-        comments_count = comments.count()
-        comments = comments.filter(parent=None)
+        total_comments_count = comments.count()
+        root_comments = comments.filter(parent=None)
 
         return Response({
-            'new_info': HackerNewsSerializer(news).data,
-            'comments': RootCommentSerializer(comments, many=True).data,
-            'comments_count': comments_count,
+            'root_comments': RootCommentSerializer(root_comments, many=True).data,
+            'total_comments_count': total_comments_count,
         })
 
 

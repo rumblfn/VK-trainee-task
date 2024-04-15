@@ -1,12 +1,45 @@
 import {FC} from "react";
-import {INewFull} from "../../shared/api/news/type.ts";
+import {INew} from "../../shared/api/news/type.ts";
 import {handleDate} from "../../shared/format.ts";
 import styles from "./styles.module.scss";
 import {Comments} from "../../entities/comment/commentsList/comments.tsx";
+import {useGetNewsCommentsInfoQuery} from "../../shared/api/news/commentsApi.ts";
 
-export const NewView: FC<INewFull> = ({new_info, comments, comments_count}) => {
-  const {title, author, created_at, rating, content} = new_info
+interface INewsCommentsWrapper {
+  readonly newId: number
+}
 
+const NewsCommentsWrapper: FC<INewsCommentsWrapper> = ({newId}) => {
+  const {
+    data,
+    refetch,
+    isError,
+    isLoading,
+    isSuccess,
+    isFetching,
+  } = useGetNewsCommentsInfoQuery(newId)
+
+  if (isLoading) {
+    return <span aria-busy="true">Hacking comments...</span>
+  }
+
+  return <footer className={styles.commentsWrapper}>
+    <div className={styles.capitalWrapper}>
+      <h3>Comments: {isSuccess && `(${data.total_comments_count})`}</h3>
+      <button onClick={refetch}
+              disabled={isLoading || isFetching}
+              data-tooltip="Hard update of news comments"
+      >
+        Update
+      </button>
+    </div>
+    {isError && <span>Something went wrong with loading comments</span>}
+    {(isFetching || isLoading) && <span aria-busy="true">Fetching comments...</span>}
+    {isSuccess && <Comments comments={data.root_comments}/>}
+  </footer>
+}
+
+export const NewView: FC<INew> = ({id, title, author, created_at, rating, content}) => {
   return <div>
     <header className="grid">
       <hgroup>
@@ -23,9 +56,6 @@ export const NewView: FC<INewFull> = ({new_info, comments, comments_count}) => {
     <main>
       {content}
     </main>
-    <footer className={styles.commentsWrapper}>
-      <h3>Comments: ({comments_count})</h3>
-      <Comments comments={comments}/>
-    </footer>
+    <NewsCommentsWrapper newId={id} />
   </div>
 }

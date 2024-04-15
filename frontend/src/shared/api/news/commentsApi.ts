@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IComment } from './type'
+import { IComment, INewsCommentsInfo } from './type'
 
 export const commentsApi = createApi({
   reducerPath: 'commentsApi',
@@ -7,8 +7,11 @@ export const commentsApi = createApi({
   endpoints: (builder) => ({
     getCommentRepliesById: builder.query<IComment[], number>({
       query: (id) => `/replies/${id}`,
-    })
+    }),
+    getNewsCommentsInfo: builder.query<INewsCommentsInfo, number>({
+      query: (id) => `/hacker-new-comments-info/${id}`,
+    }),
   }),
 })
 
-export const { useGetCommentRepliesByIdQuery } = commentsApi
+export const { useGetCommentRepliesByIdQuery, useGetNewsCommentsInfoQuery } = commentsApi

@@ -15,8 +15,7 @@ export interface IComment {
   readonly replies_count: number,
 }
 
-export interface INewFull {
-  readonly new_info: INew,
-  readonly comments: IComment[],
-  readonly comments_count: number,
+export interface INewsCommentsInfo {
+  readonly root_comments: IComment[],
+  readonly total_comments_count: number,
 }

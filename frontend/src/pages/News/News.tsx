@@ -3,26 +3,33 @@ import {NewCard} from "../../entities/newCard/newCard.tsx";
 import styles from "./styles.module.scss";
 
 export const News = () => {
-  const {data: news, isLoading, isSuccess} = useGetLatestNewsQuery(undefined, {
+  const {
+    data: news,
+    isLoading,
+    isSuccess,
+    isFetching,
+    isError,
+    refetch,
+  } = useGetLatestNewsQuery(undefined, {
     pollingInterval: 60000
   })
 
-  const handleHardUpdate = () => {
-
-  }
-
   return <div>
     <div className={styles.capitalWrapper}>
-      <h1>News page</h1>
-      <button onClick={handleHardUpdate} data-tooltip="Hard update of news">Update</button>
+      <hgroup>
+        <h1>News page</h1>
+        {((isLoading && !isSuccess) || isFetching) && <span className={styles.newsLoader} aria-busy="true">Hacking news...</span>}
+      </hgroup>
+      <button onClick={refetch}
+              disabled={isLoading || isFetching}
+              data-tooltip="Hard update of news"
+      >
+        Update
+      </button>
     </div>
     <div>
-      {isSuccess
-        ? news.map((newInfo, index) => <NewCard key={index} {...newInfo}/>)
-        : isLoading
-          ? <span aria-busy="true">Hacking news...</span>
-          : <span>Something went wrong</span>
-      }
+      {isError && <span>Something went wrong with loading news.</span>}
+      {isSuccess && news.map((newInfo, index) => <NewCard key={index} {...newInfo}/>)}
     </div>
   </div>
 }
