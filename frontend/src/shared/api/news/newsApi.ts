@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { INew } from './type'
+import {INew, INewFull} from './type'
 
 export const newsApi = createApi({
   reducerPath: 'newsApi',
@@ -8,7 +8,7 @@ export const newsApi = createApi({
     getLatestNews: builder.query<INew[], void>({
       query: () => `/hackernewslist`,
     }),
-    getById: builder.query<INew, string>({
+    getById: builder.query<INewFull, string>({
       query: (id) => `/hackernew/${id}`,
     })
   }),

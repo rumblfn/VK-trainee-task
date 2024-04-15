@@ -1,8 +1,8 @@
 import {createRoutesFromElements, Route} from "react-router-dom";
 import {Layout} from "./layout.tsx";
-import {New} from "../pages/New.tsx";
+import {New} from "../pages/New/New.tsx";
 import {NotFound} from "../pages/NotFound.tsx";
-import {News} from "../pages/News.tsx";
+import {News} from "../pages/News/News.tsx";
 
 export const appRoutes = createRoutesFromElements(
   <Route

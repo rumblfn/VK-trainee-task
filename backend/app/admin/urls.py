@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from hackernews.views import HackerNewsAPIList
-from hackernews.views import HackerNewAPI
+from hackernews.views import HackerNewsAPIList, HackerNewsDetailedAPI, CommentsAPIList, RepliesAPIList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v0/hackernew/<int:id>/', HackerNewAPI.as_view()),
-    path('api/v0/hackernewslist/', HackerNewsAPIList.as_view())
+    path('api/v0/hackernew/<id>/', HackerNewsDetailedAPI.as_view()),
+    path('api/v0/hackernewslist/', HackerNewsAPIList.as_view()),
+    path('api/v0/comments/<int:hacker_new>/', CommentsAPIList.as_view()),
+    path('api/v0/replies/<int:parent>/', RepliesAPIList.as_view()),
 ]

@@ -13,9 +13,9 @@ class HackerNews(models.Model):
 
 
 class Comments(models.Model):
-    hacker_new = models.ForeignKey('HackerNews', on_delete=models.CASCADE, null=False)
+    hacker_new = models.ForeignKey(HackerNews, on_delete=models.CASCADE, null=False, related_name='comments')
     content = models.TextField(blank=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    parent = models.ForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
